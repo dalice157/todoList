@@ -1,49 +1,51 @@
-$(function(){
-  var submitBtn = $("#submit-btn");
-  var result = $("#result");
-  
-  submitBtn.on("click", function(){
-    addItem.getItems();
-  });
-  
-  result.on("click", "li", function(){
-  	var that = $(this);
-    that.remove();
-  })
-});
 
-//新增list
-var addItem = addItem || {};
-addItem = (function(){
-  function todoInputTrim(){     //判斷瀏覽器是否支援
-    var todoInput = $("#todo-input").val();
+$(function(){
+	var inputTodo = $("input[name=todo]");
+	var addBtn = $("#addBtn");
+	var delBtn = $("#result");
+	addBtn.on("click", function(){
+		listItem.getItems();
+	});
+
+	delBtn.on("click", "#delBtn", function(){
+		var that = $(this);
+		listItem.delItems(that);
+	})
+
+})
+
+var listItem = listItem || {};
+listItem = (function(){
+	var inputTodo = $("input[name=todo]");
+	var result = $("#result");
+
+	function regTrim(){ //判斷瀏覽器是否支援 remove 空白
+		var todoVal = inputTodo.val();
     if (!String.prototype.trim) {
       String.prototype.trim = function () {
         return this.replace(/^\s+|\s+$/g, '');
       };
     }else{
-      return todoInput.trim();
+      return todoVal.trim();
     }
-  };
+	}
 
-  function items(){ //增加list
-    var result = $("#result");
-    var todoInput = $("#todo-input").val();
+	function getItems(){ //add List
+		var items = '';
+		var todoVal = inputTodo.val();
+		if(todoVal !== ''){
+			items += '<li>' + regTrim() + ' <button type="button" id="delBtn">刪除</button></li>';
+			result.append(items);
+			inputTodo.val('');
+		}
+	}
 
-    if(todoInputTrim() !== ""){
-      result.append('<li>' + todoInputTrim() + ' <button id="del-btn">X</button></li> ');
-      $("#todo-input").val("");
-      $("p").remove();
-    }else{
-      result.before('<p>請輸入文字!!</p>');
-    }
-  }
+	function delItems(that){ //del List
+		that.parent("li").remove();
+	}
 
-  function getItems(){
-    items();
-  }
-
-  return {
-    getItems: getItems
-  }
+	return {
+		getItems: getItems,
+		delItems: delItems
+	}
 }());
