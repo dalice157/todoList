@@ -38,7 +38,7 @@ listItem = (function(){
 		var error = $(".error");
 
 		console.log("todoVal:", todoVal);
-		if(todoVal !== ''){
+		if(regTrim() !== ''){
 			items += '<li>' + regTrim() + ' <button type="button" id="delBtn">刪除</button></li>';
 			result.append(items);
 			inputTodo.val('');
