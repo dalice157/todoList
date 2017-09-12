@@ -33,10 +33,18 @@ listItem = (function(){
 	function getItems(){ //add List
 		var items = '';
 		var todoVal = inputTodo.val();
+		var addBtn = $("#addBtn");
+		var errorHtml = '<p class="error">請輸入文字！！</p>';
+		var error = $(".error");
+
+		console.log("todoVal:", todoVal);
 		if(todoVal !== ''){
 			items += '<li>' + regTrim() + ' <button type="button" id="delBtn">刪除</button></li>';
 			result.append(items);
 			inputTodo.val('');
+			error.remove();
+		}else{
+			addBtn.after(errorHtml);
 		}
 	}
 
