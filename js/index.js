@@ -21,13 +21,13 @@ listItem = (function(){
 
 	function regTrim(){ //判斷瀏覽器是否支援 remove 空白
 		var todoVal = inputTodo.val();
-    if (!String.prototype.trim) {
-      String.prototype.trim = function () {
-        return this.replace(/^\s+|\s+$/g, '');
-      };
-    }else{
-      return todoVal.trim();
-    }
+		if (!String.prototype.trim) {
+			String.prototype.trim = function () {
+				return this.replace(/^\s+|\s+$/g, '');
+			};
+		}else{
+			return todoVal.trim();
+		}
 	}
 
 	function getItems(){ //add List
